@@ -1,0 +1,13 @@
+/home/dislovemt/Documents/lota/src/cpp_module/build/CMakeFiles/cpp_anomaly_detector.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/CMakeFiles/test_cpp_anomaly_detector.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/CMakeFiles/test.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/CMakeFiles/edit_cache.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/CMakeFiles/rebuild_cache.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/CMakeFiles/test.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/CMakeFiles/edit_cache.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/CMakeFiles/rebuild_cache.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/src/CMakeFiles/Catch2.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/src/CMakeFiles/test.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/src/CMakeFiles/edit_cache.dir
+/home/dislovemt/Documents/lota/src/cpp_module/build/_deps/catch2-build/src/CMakeFiles/rebuild_cache.dir

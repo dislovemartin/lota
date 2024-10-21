@@ -1,10 +1,12 @@
-// cpp_anomaly_detector.cpp (C++ Anomaly Detector Implementation)
 #include "cpp_anomaly_detector.h"
 
-CppAnomalyDetector::CppAnomalyDetector() {}
-
 std::vector<std::string> CppAnomalyDetector::detect(const std::string& data) {
-    // Placeholder for C++ anomaly detection logic
-    return {"Anomaly Detected"};
+    std::vector<std::string> anomalies;
+    if (data.find("error") != std::string::npos) {
+        anomalies.emplace_back("Error detected in data.");
+    }
+    if (data.find("warning") != std::string::npos) {
+        anomalies.emplace_back("Warning detected in data.");
+    }
+    return anomalies;
 }
-

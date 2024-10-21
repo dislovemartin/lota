@@ -1,12 +1,13 @@
-// test_cpp_anomaly_detector.cpp (C++ Anomaly Detector Unit Tests)
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "cpp_anomaly_detector.h"
 
-TEST_CASE("CppAnomalyDetector detects anomalies", "[AnomalyDetector]") {
+TEST_CASE("Anomaly Detection Test", "[anomaly]") {
     CppAnomalyDetector detector;
-    std::vector<std::string> result = detector.detect("Test data");
-    REQUIRE(result.size() == 1);
-    REQUIRE(result[0] == "Anomaly Detected");
-}
+    std::string data = "This is a test with error and warning.";
+    std::vector<std::string> anomalies = detector.detect(data);
 
+    REQUIRE(anomalies.size() == 2);
+    REQUIRE(anomalies[0] == "Error detected in data.");
+    REQUIRE(anomalies[1] == "Warning detected in data.");
+}

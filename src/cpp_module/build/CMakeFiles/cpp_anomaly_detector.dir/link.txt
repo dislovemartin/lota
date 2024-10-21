@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcpp_anomaly_detector.a CMakeFiles/cpp_anomaly_detector.dir/src/cpp_anomaly_detector.cpp.o
+/usr/bin/ranlib libcpp_anomaly_detector.a

@@ -8,6 +8,10 @@ IFS=$'\n\t'
 PROJECT_ROOT="$(git rev-parse --show-toplevel)"
 cd "$PROJECT_ROOT"
 
+echo "Project Root: $PROJECT_ROOT"
+echo "Verifying existence of requirements.txt..."
+ls -l src/predictive_analytics/data_processing/requirements.txt
+
 echo "Installing Python dependencies..."
 pip install --upgrade pip
 pip install -r src/predictive_analytics/data_processing/requirements.txt
