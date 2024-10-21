@@ -1,0 +1,15 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Install Python dependencies
+COPY src/ai_consulting/strategy_development/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source code
+COPY src/ai_consulting/strategy_development/ .
+
+EXPOSE 8006
+
+CMD ["python", "strategy_developer.py"]
+

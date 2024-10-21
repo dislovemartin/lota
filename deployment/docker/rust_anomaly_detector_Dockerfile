@@ -1,0 +1,12 @@
+FROM rust:1.70
+
+WORKDIR /app
+
+# Copy source code
+COPY src/cybersecurity_ai/anomaly_detection/rust_service/ .
+
+# Build the Rust application
+RUN cargo build --release
+
+CMD ["./target/release/anomaly_detector"]
+

@@ -1,0 +1,15 @@
+FROM ubuntu:22.04
+
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update &&     apt-get install -y build-essential cmake
+
+# Copy source code
+COPY src/cpp_module/ .
+
+# Build the C++ application
+RUN mkdir -p build &&     cd build &&     cmake .. &&     make
+
+CMD ["./build/cpp_anomaly_detector"]
+

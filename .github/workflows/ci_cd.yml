@@ -1,0 +1,119 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Python Dependencies
+        run: |
+          bash deployment/ci_cd/build_scripts/install_dependencies.sh
+
+      - name: Run Python Unit Tests
+        run: |
+          python3 -m unittest discover -s tests/unit
+
+      - name: Run Python Integration Tests
+        run: |
+          python3 -m unittest discover -s tests/integration
+
+      - name: Run Python End-to-End Tests
+        run: |
+          python3 -m unittest discover -s tests/e2e
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      - name: Build and Test Go Recommender Service
+        run: |
+          cd src/personalization_engine/real_time_personalization/go_service
+          go build -v .
+          go test -v ./...
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Build and Test Rust Anomaly Detector
+        run: |
+          cd ../../../../cybersecurity_ai/anomaly_detection/rust_service
+          cargo build --release
+          cargo test
+
+      - name: Build and Test C++ Anomaly Detector
+        run: |
+          bash tests/unit/test_cpp_anomaly_detector.sh
+
+      - name: Build Docker Images
+        run: |
+          docker build -t your-docker-registry/ai-chatbot:latest -f deployment/docker/ai_chatbot_Dockerfile src/ai_chatbot
+          docker build -t your-docker-registry/cpp-anomaly-detector:latest -f deployment/docker/cpp_module_Dockerfile src/cpp_module
+          docker build -t your-docker-registry/rust-anomaly-detector:latest -f deployment/docker/rust_anomaly_detector_Dockerfile src/cybersecurity_ai/anomaly_detection/rust_service
+          docker build -t your-docker-registry/go_recommender_service:latest -f deployment/docker/go_recommender_service_Dockerfile src/personalization_engine/real_time_personalization/go_service
+          docker build -t your-docker-registry/predictive-analytics:latest -f deployment/docker/predictive_analytics_Dockerfile src/predictive_analytics
+          docker build -t your-docker-registry/personalization-engine:latest -f deployment/docker/personalization_engine_Dockerfile src/personalization_engine/recommender
+          docker build -t your-docker-registry/content_creation_ai:latest -f deployment/docker/content_creation_ai_Dockerfile src/content_creation_ai
+          docker build -t your-docker-registry/healthcare_ai:latest -f deployment/docker/healthcare_ai_Dockerfile src/healthcare_ai
+          docker build -t your-docker-registry/ai_consulting:latest -f deployment/docker/ai_consulting_Dockerfile src/ai_consulting/strategy_development
+          docker build -t your-docker-registry/vr_ar_ai:latest -f deployment/docker/vr_ar_ai_Dockerfile src/vr_ar_ai
+          docker build -t your-docker-registry/supply_chain_ai:latest -f deployment/docker/supply_chain_ai_Dockerfile src/supply_chain_ai
+          docker build -t your-docker-registry/automl:latest -f deployment/docker/automl_Dockerfile src/automl
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          registry: your-docker-registry
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Images
+        run: |
+          docker push your-docker-registry/ai-chatbot:latest
+          docker push your-docker-registry/cpp-anomaly-detector:latest
+          docker push your-docker-registry/rust-anomaly-detector:latest
+          docker push your-docker-registry/go_recommender_service:latest
+          docker push your-docker-registry/predictive-analytics:latest
+          docker push your-docker-registry/personalization-engine:latest
+          docker push your-docker-registry/content_creation_ai:latest
+          docker push your-docker-registry/healthcare_ai:latest
+          docker push your-docker-registry/ai_consulting:latest
+          docker push your-docker-registry/vr_ar_ai:latest
+          docker push your-docker-registry/supply_chain_ai:latest
+          docker push your-docker-registry/automl:latest
+
+  deploy:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Deploy to Kubernetes
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          echo "${KUBE_CONFIG_DATA}" | base64 --decode > ~/.kube/config
+          bash deployment/ci_cd/build_scripts/deploy.sh
+

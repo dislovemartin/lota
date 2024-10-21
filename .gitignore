@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Go
+/bin/
+pkg/
+*.test
+
+# Rust
+/target/
+Cargo.lock
+
+# C++
+/build/
+*.o
+*.obj
+*.exe
+*.out
+
+# Docker
+*.log
+.docker/
+
+# Kubernetes
+*.yaml
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Test artifacts
+*.cover
+coverage.xml
+
+# Logs
+*.log
+logs/
+
+# Virtual Environment
+.venv/
+
